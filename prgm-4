@@ -1,0 +1,18 @@
+ptx = 0.05;
+d = [20 60 100 200];
+f = 2.4e9;
+n = [2 3 4];
+c = 299792458;
+lamda = c / f;
+ptxdbm = 10 * log10(ptx * 1000);
+figure; hold on;
+for j = 1:length(n)
+    pr = zeros(1, length(d));
+    for i = 1:length(d)
+        fspl = 20 * log10(4 * pi * d(i) / lam);
+        pr(i) = ptxdbm - fspl - 10 * n(j) * log10(d(i));
+    end
+    plot(d, pr, 'LineWidth', 2, 'DisplayName', ['n=' num2str(n(j))]);
+end
+xlabel('Distance'); ylabel('Power (dBm)');
+title('Power vs Distance'); legend; grid on;
