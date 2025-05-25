@@ -1,0 +1,40 @@
+clc;
+clear;
+close all;
+% Parameters
+frequency = 3e9; % Frequency (3 GHz)
+lambda = 3e8 / frequency; % Wavelength
+numElements = 8; % Number of elements in the array
+d = lambda / 2; % Element spacing (in wavelengths)
+theta_steering = 30; % Desired steering angle (degrees)
+% Angle range for radiation pattern
+angles = linspace(-90, 90, 180); % Angles from -90 to 90 degrees
+% Define the element positions in a linear array
+elementPositions = (0:numElements-1) * d; % Positions of the
+elements
+% Calculate the array factor
+AF = zeros(size(angles)); % Initialize array factor
+for m = 1:numElements
+beta = exp(1j * (2 * pi / lambda) * (elementPositions(m) *
+sind(theta_steering))); % Phase shift for steering
+AF = AF + beta * exp(1j * (2 * pi / lambda) *
+(elementPositions(m) * sind(angles))); % Array factor
+calculation
+end
+% Normalize the array factor
+AF = abs(AF);
+AF = AF / max(AF); % Normalize to maximum value
+% Plot the radiation pattern
+figure;
+polarplot(deg2rad(angles), AF, 'LineWidth',2);
+title('Beamforming Pattern of Patch Antenna Array');
+ax = gca;
+ax.Theta = -90:30:90; % Set theta
+grid on;
+% Display the main lobe direction
+hold on;
+polarplot(deg2rad(theta_steering), max(AF), 'ro'); % Marking the
+steering direction
+legend('Radiation Pattern', 'Steering Direction');
+hold off;
+Observations:
