@@ -1,0 +1,22 @@
+% CDMA Simulation - Simplified
+bits = 1000; snr = 10;
+u1 = randi([0,1],1,bits); u2 = randi([0,1],1,bits);
+s1 = 2*u1 - 1; s2 = 2*u2 - 1;
+
+code = [1 -1 1 1 -1 1 -1 -1];
+s1c = kron(s1, code); s2c = kron(s2, code);
+noise = sqrt(10^(-snr/10)/2);
+
+s1n = s1c + noise*randn(1, length(s1c));
+s2n = s2c + noise*randn(1, length(s2c));
+
+f1 = filter(fliplr(code), 1, s1n);
+f2 = filter(fliplr(code), 1, s2n);
+
+d1 = f1(1:8:end) > 0; d2 = f2(1:8:end) > 0;
+
+ber1 = sum(d1 ~= u1) / bits;
+ber2 = sum(d2 ~= u2) / bits;
+
+disp(['User 1 BER: ', num2str(ber1)]);
+disp(['User 2 BER: ', num2str(ber2)]);
