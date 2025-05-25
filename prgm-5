@@ -1,0 +1,35 @@
+clc; clear;
+
+% --- Basic Parameters ---
+f = 900;           % Frequency in MHz
+hb = 30;           % Base station height (m)
+hm = 1.5;          % Mobile station height (m)
+d_km = [0.1 0.5 1 2];      % Distances in km
+d_m = d_km * 1000;         % Convert km to m
+Pt = 1;            % Transmit power (W)
+
+% --- Correction Factor (Small city) ---
+a_hm = 0.8 + (1.1 * log10(f) - 0.7) * hm - 1.56 * log10(f);
+
+% --- Okumura-Hata Path Loss ---
+L_oh = 69.55 + 26.16*log10(f) - 13.82*log10(hb) - a_hm + ...
+       (44.9 - 6.55*log10(hb)) .* log10(d_km);
+
+% --- Two-Ray Ground Reflection Model ---
+Gt = 1; Gr = 1; L = 1;
+Pr_two_ray = Pt * (Gt * Gr * (hb * hm)^2) ./ (d_m.^4 * L);
+Pr_two_ray_dBm = 10 * log10(Pr_two_ray * 1000); % Convert to dBm
+
+% --- Display Results as Table ---
+result_table = table(d_km', L_oh', Pr_two_ray_dBm', ...
+    'VariableNames', {'Distance_km', 'PathLoss_dB', 'TwoRay_Pr_dBm'});
+disp('--- Wireless Model Comparison ---');
+disp(result_table);
+
+% --- Plot ---
+figure;
+plot(d_km, -L_oh, 'ro-', 'LineWidth', 1.5); hold on;
+plot(d_km, Pr_two_ray_dBm, 'bs--', 'LineWidth', 1.5);
+legend('Okumura-Hata Path Loss', 'Two-Ray Received Power');
+xlabel('Distance (km)'); ylabel('Power (dB)');
+title('Wireless Channel Comparison'); grid on;
