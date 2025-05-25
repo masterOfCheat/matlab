@@ -1,0 +1,19 @@
+% TDMA Simulation - Simplified
+users = 4; slots = 10; gain = 0.8;
+data = randi([0,1], users, slots);  % Random bits
+userSlots = mod(0:slots-1, users) + 1;  % Slot allocation
+recv = zeros(users, slots);
+
+for s = 1:slots
+    u = userSlots(s);
+    recv(u, s) = data(u, s) * gain;
+end
+
+ber = sum(sum(xor(data, recv))) / (users * slots);
+
+% Plot
+time = 1:slots;
+subplot(2,1,1); stem(time, data'); title('User Data'); xlabel('Time'); ylabel('Bits');
+subplot(2,1,2); stem(time, recv'); title('Received Data'); xlabel('Time'); ylabel('Bits');
+
+disp(['BER: ', num2str(ber)]);
