@@ -1,0 +1,56 @@
+% Define Parameters
+num_cells = 12; % Number of cells in the cluster
+num_users_per_cell = 100; % Number of users per cell
+total_users = num_cells * num_users_per_cell; % Total number of users
+
+channel_bandwidth = 200e3; % Channel bandwidth in Hz (e.g., 200 kHz)
+total_bandwidth = 5e6; % Total available bandwidth in Hz (e.g., 5 MHz)
+
+% Control and Data Channels
+control_channel_bandwidth = 10e3; % Control channel bandwidth in Hz
+data_channel_bandwidth = 50e3; % Data channel bandwidth in Hz
+
+control_channel_bandwidth = num_cells*10e3; % Control channel bandwidth in Hz
+data_channel_bandwidth = num_cells*50e3; % Data channel bandwidth in Hz
+
+num_control_channels = ceil(total_bandwidth / control_channel_bandwidth);
+num_data_channels = ceil(total_bandwidth / data_channel_bandwidth);
+
+% Display Results
+fprintf('Cellular Network Evaluation:\n');
+fprintf('Number of Cells: %d\n', num_cells);
+fprintf('Number of Users per Cell: %d\n', num_users_per_cell);
+fprintf('Total Number of Users: %d\n', total_users);
+fprintf('Total Bandwidth: %.2f MHz\n', total_bandwidth / 1e6);
+fprintf('Control Channel Bandwidth: %.2f kHz\n', control_channel_bandwidth / 1e3);
+fprintf('Data Channel Bandwidth: %.2f kHz\n', data_channel_bandwidth / 1e3);
+fprintf('Number of Control Channels: %d\n', num_control_channels);
+fprintf('Number of Data Channels: %d\n', num_data_channels);
+
+% MATLAB program to evaluate cellular concepts
+
+% Define Parameters
+num_cells = 4; % Number of cells in the cluster
+num_users_per_cell = 100; % Number of users per cell
+total_users = num_cells * num_users_per_cell; % Total number of users
+
+channel_bandwidth = 200e3; % Channel bandwidth in Hz (e.g., 200 kHz)
+total_bandwidth = 5e6; % Total available bandwidth in Hz (e.g., 5 MHz)
+
+% Control and Data Channels
+control_channel_bandwidth = num_cells*10e3; % Control channel bandwidth in Hz
+data_channel_bandwidth = num_cells*50e3; % Data channel bandwidth in Hz
+
+num_control_channels = ceil(total_bandwidth / control_channel_bandwidth);
+num_data_channels = ceil(total_bandwidth / data_channel_bandwidth);
+
+% Display Results
+fprintf('Cellular Network Evaluation:\n');
+fprintf('Number of Cells: %d\n', num_cells);
+fprintf('Number of Users per Cell: %d\n', num_users_per_cell);
+fprintf('Total Number of Users: %d\n', total_users);
+fprintf('Total Bandwidth: %.2f MHz\n', total_bandwidth / 1e6);
+fprintf('Control Channel Bandwidth: %.2f kHz\n', control_channel_bandwidth / 1e3);
+fprintf('Data Channel Bandwidth: %.2f kHz\n', data_channel_bandwidth / 1e3);
+fprintf('Number of Control Channels: %d\n', num_control_channels);
+fprintf('Number of Data Channels: %d\n', num_data_channels);
